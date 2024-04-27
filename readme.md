@@ -1,6 +1,6 @@
 # Directory Traversal and Asset Management Scripts
 
-This repository contains scripts designed to traverse through directories in your file system, listing the contents, and managing assets by copying and updating them into structured formats. It outputs the directory structure to a Markdown file named `output.md` and manages assets to create a refined `finalOutput.md`.
+This repository contains scripts designed to traverse through directories in your file system, listing the contents, and managing assets by copying and updating them into structured formats. It outputs the directory structure to a Markdown file named `mapping.md` and manages assets to create a refined `final-mapping.md`.
 
 ## Prerequisites
 
