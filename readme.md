@@ -4,7 +4,7 @@ This repository contains scripts designed to traverse through directories in you
 
 ## Prerequisites
 
-- Node.js installed on your computer.
+- Node.js installed on your computer. Yarn or pnpm is recommended for package management.
 
 ## Setup
 
@@ -13,7 +13,7 @@ This repository contains scripts designed to traverse through directories in you
 
 2. **Install Dependencies**
    Navigate to the cloned repository's root directory in your terminal and run:
-   `yarn install`
+   `pnpm install` or `yarn install`
    This will install all necessary dependencies.
 
 ## Usage
