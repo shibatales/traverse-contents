@@ -32,6 +32,6 @@ async function updateOutputMd(inputFilePath: string, outputFilePath: string) {
   }
 }
 
-const inputFilePath = path.join(__dirname, 'output.md');
-const outputFilePath = path.join(__dirname, 'finalOutput.md');
+const inputFilePath = path.join(__dirname, 'mapping.md');
+const outputFilePath = path.join(__dirname, 'final-mapping.md');
 updateOutputMd(inputFilePath, outputFilePath);

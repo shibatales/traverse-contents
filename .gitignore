@@ -1,3 +1,10 @@
 # Ignore the assets folder
 assets/
+constructor/
 node_modules/
+previous/
+youdles/
+youdles_bk/
+metadata/
+*.zip
+.DS_Store

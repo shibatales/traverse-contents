@@ -23,11 +23,11 @@ async function listDirectoryContents(dirPath: string, prefix: string = ''): Prom
 }
 
 async function main() {
-  const rootDir = './assets'; // Set your root directory path here
+  const rootDir = './youdles'; // Set your root directory path here
   const output = await listDirectoryContents(rootDir);
   // Write the output to a Markdown file
-  await fs.writeFile('output.md', output);
-  console.log('Directory contents written to output.md');
+  await fs.writeFile('mapping.md', output);
+  console.log('Directory contents written to mapping.md');
 }
 
-main().catch(console.error); ``;
+main().catch(console.error);
