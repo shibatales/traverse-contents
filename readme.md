@@ -65,9 +65,9 @@ This repository contains scripts designed to traverse through directories in you
 
    This will copy all files from the source directory to the destination, maintaining the directory structure.
 
-3. **Update Final Output**
+3. **Update Final Mapping**
 
-   To update the final output Markdown file, use the `update.ts` script. Set the input and output file paths in the script:
+   To update the final mapping Markdown file, use the `update.ts` script. Set the input and output file paths in the script:
 
    `const inputFilePath = path.join(__dirname, 'mapping.md');`
    `const outputFilePath = path.join(__dirname, 'final-mapping.md');`
