@@ -13,7 +13,7 @@ This repository contains scripts designed to traverse through directories in you
 
 2. **Install Dependencies**
    Navigate to the cloned repository's root directory in your terminal and run:
-   `npm install`
+   `yarn install`
    This will install all necessary dependencies.
 
 ## Usage
