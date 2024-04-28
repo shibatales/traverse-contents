@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "csv-parse": "^5.5.5",
     "csv-stringify": "^6.4.6",
     "fs": "^0.0.1-security",
     "jimp": "^0.22.12",

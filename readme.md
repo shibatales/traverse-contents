@@ -92,6 +92,15 @@ This repository contains scripts designed to traverse through directories in you
    
    Ensure that the script is configured with the correct paths and categories before running.
 
+### Merge CSV Files
+1. **Run the Merge Script**
+   The `merge.ts` script is used to combine multiple CSV files into a single CSV file. This is useful for consolidating data from various sources.
+   To run this script, navigate to the root directory of the cloned repository and execute:
+   
+   `npx ts-node merge.ts`
+   
+   Ensure that the script is configured with the correct paths to the CSV files before running.
+
 ## Notes
 - The scripts are configured to ignore directories with "ignore" or "Custom" in their names and `.DS_Store` files. Adjust the filtering logic in `traverse.ts` if you need different behavior.
 
