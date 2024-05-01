@@ -10,7 +10,7 @@ interface CsvDataType {
   attributes: string;
 }
 
-interface AttributesType { rarity?: string, gender?: string, color?: string, hat?: 'bool:1' | 'bool:0'; }
+interface AttributesType { rarity?: string, gender?: string, color?: string, hat?: 'bool:1' | 'bool:0';[key: string]: string | undefined; }
 
 const baseUri = "ipfs://QmVkVwq9wJK55WCk58gkjGK8hpgTi8XSJ6BmX34Q3zb65N/";
 const categories = ['arms', 'lips', 'hairs', 'eyes', 'ears', 'accessories', 'beards', 'chest', 'skin', 'background'];
@@ -54,7 +54,7 @@ categories.forEach(category => {
 
         const mediaUri = `${ baseUri }${ category }/${ fileRelativePath }`;
         const thumbnailUri = `${ baseUri }${ category }/${ fileRelativePath.replace('.png', '_350x350.png') }`;
-        const attributes = extractAttributes(category, file.name, directory);
+        const attributes = extractAttributes(category, file.name, directory, name);
         const attributesString = Object.entries(attributes)
           .map(([key, value]) => `${ key }:${ value }`)
           .join(',');
@@ -90,7 +90,7 @@ categories.forEach(category => {
   csvStringifier.end();
 });
 
-function extractAttributes(category: string, filename: string, directory: string) {
+function extractAttributes(category: string, filename: string, directory: string, name: string) {
   const attributes: AttributesType = {};
   const parts = filename.split('_');
   const genderRegex = /male|female/;
@@ -99,22 +99,33 @@ function extractAttributes(category: string, filename: string, directory: string
   const rarityMatch = directory.match(rarityRegex);
 
   if (rarityMatch) {
-    attributes.rarity = `string:${ rarityMatch[1] }`;
+    const rarityValue = rarityMatch[1].charAt(0).toUpperCase() + rarityMatch[1].slice(1);
+    attributes.Rarity = `string:${ rarityValue }`;
   }
 
+  const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
+  attributes[categoryName] = `string:${ name }`;
+
   parts.forEach(part => {
-    if (genderRegex.test(part)) attributes.gender = `string:${ part }`;
+    const genderMatch = part.match(genderRegex);
+    if (genderMatch) {
+      const genderValue = genderMatch[0].charAt(0).toUpperCase() + genderMatch[0].slice(1);
+      attributes.Gender = `string:${ genderValue }`;
+    }
 
     const colorMatch = part.match(colorRegex);
-    if (colorMatch && (category === 'arms' || category === 'hairs')) {
-      attributes.color = `string:${ colorMatch[1] || colorMatch[2] }`;
+    if (colorMatch) {
+      const colorValue = (colorMatch[1] || colorMatch[2]).charAt(0).toUpperCase() + (colorMatch[1] || colorMatch[2]).slice(1);
+      if (category === 'arms' || category === 'hairs') {
+        attributes.Color = `string:${ colorValue }`;
+      }
     }
 
     if (category === 'hairs') {
       if (filename.startsWith('hat_')) {
-        attributes.hat = 'bool:1';
+        attributes.Hat = 'bool:1';
       } else {
-        attributes.hat = 'bool:0';
+        attributes.Hat = 'bool:0';
       }
     }
   });
