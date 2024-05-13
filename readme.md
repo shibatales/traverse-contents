@@ -92,6 +92,15 @@ This repository contains scripts designed to traverse through directories in you
    
    Ensure that the script is configured with the correct paths and categories before running.
 
+### Generate JSON Files
+1. **Run the JSON Generation Script**
+   The `createAllJSON.ts` script is used to process directories and generate JSON files for each category of assets. This is useful for cataloging and managing large sets of assets systematically.
+   To run this script, navigate to the root directory of the cloned repository and execute:
+   
+   `npx ts-node createAllJSON.ts`
+   
+   Ensure that the script is configured with the correct paths and categories before running.
+
 ### Merge CSV Files
 1. **Run the Merge Script**
    The `merge.ts` script is used to combine multiple CSV files into a single CSV file. This is useful for consolidating data from various sources.
