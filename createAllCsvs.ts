@@ -8,6 +8,8 @@ interface CsvDataType {
   mediaUri: string;
   thumbnailUri: string;
   attributes: string;
+  preferThumb: string;
+  externalUri: string;
 }
 
 interface AttributesType { rarity?: string, gender?: string, color?: string, hat?: 'bool:1' | 'bool:0';[key: string]: string | undefined; }
@@ -25,7 +27,7 @@ if (!fs.existsSync(outputDir)) {
 categories.forEach(category => {
   const categoryPath = path.join(youdlesDir, category);
   const csvData: CsvDataType[] = [];
-  const headers = ['filename', 'name', 'mediaUri', 'thumbnailUri', 'attributes'];
+  const headers = ['filename', 'name', 'mediaUri', 'thumbnailUri', 'attributes', 'preferThumb', 'externalUri'];
 
   console.log(`Processing category: ${ category }`);
 
@@ -65,6 +67,8 @@ categories.forEach(category => {
           mediaUri,
           thumbnailUri,
           attributes: attributesString,
+          preferThumb: 'true',
+          externalUri: 'https://youdles.xyz'
         });
 
         console.log(`Added file to CSV data: ${ filename }`);
