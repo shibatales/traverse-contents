@@ -14,7 +14,7 @@ interface CsvDataType {
 
 interface AttributesType { rarity?: string, gender?: string, color?: string, hat?: 'bool:1' | 'bool:0';[key: string]: string | undefined; }
 
-const baseUri = "ipfs://QmVkVwq9wJK55WCk58gkjGK8hpgTi8XSJ6BmX34Q3zb65N/";
+const baseUri = "ipfs://QmaWaB7pAiJ5gZaqc2dXWXoetWqR9v7AR2pwwBewzmVhvG/";
 const categories = ['arms', 'lips', 'hairs', 'eyes', 'ears', 'accessories', 'beards', 'chest', 'skin', 'background'];
 const youdlesDir = path.join(__dirname, 'youdles');
 const outputDir = path.join(__dirname, 'metadata');
@@ -99,7 +99,7 @@ function extractAttributes(category: string, filename: string, directory: string
   const parts = filename.split('_');
   const genderRegex = /male|female/;
   const colorRegex = /(?:\d+_)?(dark|light|tan)|(?:male|female_)(black|blond|brown|white)/;
-  const rarityRegex = /\/(common|rare|rainbow)\//;
+  const rarityRegex = /\/(common|epic|legendary)\//;
   const rarityMatch = directory.match(rarityRegex);
 
   if (rarityMatch) {
