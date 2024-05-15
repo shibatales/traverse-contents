@@ -2,12 +2,12 @@ import * as fs from 'fs';
 import * as path from 'path';
 import Jimp from 'jimp';
 
-const directoryPath: string = path.join(__dirname, '');
+const directoryPath: string = path.join(__dirname, 'resize');
 
 // Function to resize images
 function resizeImage(filePath: string): void {
-  const fileName: string = path.basename(filePath, '.jpg');
-  const outputFileName: string = `${ fileName }_350x350.jpg`;
+  const fileName: string = path.basename(filePath, '.png');
+  const outputFileName: string = `${ fileName }_350x350.png`;
   const outputPath: string = path.join(path.dirname(filePath), outputFileName);
 
   Jimp.read(filePath)
@@ -36,7 +36,7 @@ function processDirectory(dirPath: string): void {
       const fullPath = path.join(dirPath, entry.name);
       if (entry.isDirectory()) {
         processDirectory(fullPath);
-      } else if (path.extname(entry.name).toLowerCase() === '.jpg') {
+      } else if (path.extname(entry.name).toLowerCase() === '.png') {
         console.log(`Processing image: ${ fullPath }`);
         resizeImage(fullPath);
       }
