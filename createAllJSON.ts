@@ -24,23 +24,43 @@ const categoryToSlotId: CategoryMappings = {
   lips: 1009
 };
 
-const categoryToBaseUri: BaseUriMappings = {
-  accessories: 'ipfs://QmfEjHW3bxf8Y4yaefZb1GbUTAc7ddBXo7zET5CFaunPws',
-  arms: 'ipfs://QmesXQbQgrrLi8iPQBwZzK8RsQMP4KmtFQGPMF69sNGAYs',
-  background: 'ipfs://QmfYeuXsMhuguQCNphyJnnKDeX1z29j5M1gqkg6PofnBEM',
-  beards: 'ipfs://QmYXEgJUATQ1nHok6dNAD3Vy7LVKDByoEV5jiD31H55Gxm',
-  chest: 'ipfs://QmeX4n4LwQ3THatjGn7jcqTDdrn3x4J6XaGHtZAA1DG5dK',
-  ears: 'ipfs://QmWWxnN2DuUK32vVXoXKmkNpDY9ErEA45FvbjnWfJ8KdnS',
-  eyes: 'ipfs://Qmdh94NKeBV5gLJ3sG1LEBNVgBifSs5fSf6y7ywVwrUK6i',
-  hairs: 'ipfs://QmTTEEZ9UiQqzg5EAMz9znsmCkpqwfvWnZQiGGqxNj7mvk',
-  lips: 'ipfs://QmVfn4vF3D92mYn454xhiyiMYRz3MDrnNGAvUyX16n1wyj'
+const slotIdToSlotName: Record<number, string> = {
+  1001: 'C.ACCESSORIES_SLOT_ID',
+  1002: 'C.ARMS_SLOT_ID',
+  1003: 'C.BACKGROUND_SLOT_ID',
+  1004: 'C.BEARDS_SLOT_ID',
+  1005: 'C.CHEST_SLOT_ID',
+  1006: 'C.EARS_SLOT_ID',
+  1007: 'C.EYES_SLOT_ID',
+  1008: 'C.HAIRS_SLOT_ID',
+  1009: 'C.LIPS_SLOT_ID'
 };
 
-type ItemTuple = [number, number, string, string, string | null];
+const BASE_ACCESSORIES_SLOT_URI = 'ipfs://QmVY66jqLb5eFsK1VyuNgJs15PkcP6dFDTSDyEBmhUKm22';
+const BASE_ARMS_SLOT_URI = 'ipfs://QmYbcbAhEfayzzi6j6EKXJ9VCjL5VSMAkewTqoTrGKaYtX';
+const BASE_BACKGROUND_SLOT_URI = 'ipfs://QmYoAutPbWC3oAGGKtinxdZVJDQNv2sbNbFocswYd4QoKY';
+const BASE_BEARDS_SLOT_URI = 'ipfs://QmZsY4eJAK8mCfm315CNDhPpksAfBSNk5sfGA3w3ZqjhL8';
+const BASE_CHEST_SLOT_URI = 'ipfs://QmW8aayPqC8Vh3sNT1k5VudeGrvUyumBhbLBRAnpgLM6jp';
+const BASE_EARS_SLOT_URI = 'ipfs://QmNriCrwDfSpJRpmg5vrpAFeXAv4JuzkCYg43tQyWH2UeP';
+const BASE_EYES_SLOT_URI = 'ipfs://QmNjAnzphkgZkM5Xi1tViMJJpp9nFEVwXZxefbmuMskYFd';
+const BASE_HAIRS_SLOT_URI = 'ipfs://QmV8hnkGDMQDMPDeQZArAcEQkHNPcYvdDJRreATsdsYvg9';
+const BASE_LIPS_SLOT_URI = 'ipfs://QmQij3LeakFbxmty5LyNkjeCQA85t6Aq3aQAyB4iBywZVN';
+
+const categoryToBaseUri: BaseUriMappings = {
+  accessories: BASE_ACCESSORIES_SLOT_URI,
+  arms: BASE_ARMS_SLOT_URI,
+  background: BASE_BACKGROUND_SLOT_URI,
+  beards: BASE_BEARDS_SLOT_URI,
+  chest: BASE_CHEST_SLOT_URI,
+  ears: BASE_EARS_SLOT_URI,
+  eyes: BASE_EYES_SLOT_URI,
+  hairs: BASE_HAIRS_SLOT_URI,
+  lips: BASE_LIPS_SLOT_URI
+};
+
+type ItemTuple = [string, number, string, string, string | null];
 
 let fileIndex: number = 4;
-let hatFileIndex: number = 1;
-let armFileIndex: number = 1;
 let allItems: ItemTuple[] = [];
 let allHatItems: ItemTuple[] = [];
 let allArmItems: ItemTuple[] = [];
@@ -66,6 +86,10 @@ function processCategory(categoryPath: string, category: string): void {
   });
 }
 
+function getSlotIdName(slotId: number): string {
+  return slotIdToSlotName[slotId].replace(/'/g, '');
+}
+
 function processAssets(assetsPath: string, category: string): void {
   const files = fs.readdirSync(assetsPath, { withFileTypes: true });
 
@@ -83,7 +107,7 @@ function processAssets(assetsPath: string, category: string): void {
 
       if (entry.name.startsWith('hat_')) {
         hatFiles[filename.substring(4)] = itemPath;
-        allHatItems.push([slotId, fileIndex, itemPath, rarity, null]);
+        allHatItems.push([getSlotIdName(slotId), fileIndex, itemPath, rarity, null]);
         fileIndex++;
       } else if (slotId === 1002) {
         const baseName = filename.replace(/_(tan|light|dark)(_.+)?\.json$/, '');
@@ -113,16 +137,16 @@ function processAssets(assetsPath: string, category: string): void {
           const suffixMatch = filename.match(/(_.+)?\.json$/);
           const suffix = suffixMatch ? suffixMatch[0].replace(/_(tan|light|dark)/, '') : '.json';
           const variants = otherColors.map(c => `${ baseUri }/assets/${ baseName }_${ c }${ suffix }`).join(',');
-          allArmItems.push([slotId, fileIndex, itemPath, rarity, variants]);
-          allItems.push([slotId, fileIndex, itemPath, rarity, variants]);
+          allArmItems.push([getSlotIdName(slotId), fileIndex, itemPath, rarity, variants]);
+          allItems.push([getSlotIdName(slotId), fileIndex, itemPath, rarity, variants]);
           fileIndex++;
         }
       } else if (slotId === 1008) {
         const variantPath = hatFiles[filename] || null;
-        allItems.push([slotId, fileIndex, itemPath, rarity, variantPath]);
+        allItems.push([getSlotIdName(slotId), fileIndex, itemPath, rarity, variantPath]);
         fileIndex++;
       } else {
-        allItems.push([slotId, fileIndex, itemPath, rarity, null]);
+        allItems.push([getSlotIdName(slotId), fileIndex, itemPath, rarity, null]);
         fileIndex++;
       }
     }
@@ -132,14 +156,16 @@ function processAssets(assetsPath: string, category: string): void {
 function extractRarity(filePath: string): string {
   const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   const rarityAttribute = data.attributes.find((attr: { trait_type: string; value: string; }) => attr.trait_type === 'Rarity');
-  return rarityAttribute ? (rarityAttribute.value === 'Rainbow' ? 'Legendary' : rarityAttribute.value === 'Rare' ? 'Epic' : rarityAttribute.value) : 'Unknown';
+  return rarityAttribute ? rarityAttribute.value : 'Unknown';
 }
 
 processDirectory(jsonDir);
 
-const outputContent: string = `export const ALL_ITEM_URIS: ItemUriEntry[] = ${ JSON.stringify(allItems, null, 2) };`;
-const outputHatContent: string = `export const ALL_HAT_URIS: ItemUriEntry[] = ${ JSON.stringify(allHatItems, null, 2) };`;
-const outputArmContent: string = `export const ALL_ARM_URIS: ItemUriEntry[] = ${ JSON.stringify(allArmItems, null, 2) };`;
+const formatItemUriEntry = (entry: ItemTuple) => entry.map((value, index) => index === 0 ? value : JSON.stringify(value));
+
+const outputContent: string = `export const ALL_ITEM_URIS: ItemUriEntry[] = [\n${ allItems.map(item => `  [${ formatItemUriEntry(item).join(', ') }]`).join(',\n') }\n];`;
+const outputHatContent: string = `export const ALL_HAIR_FOR_HAT_URIS: ItemUriEntry[] = [\n${ allHatItems.map(item => `  [${ formatItemUriEntry(item).join(', ') }]`).join(',\n') }\n];`;
+const outputArmContent: string = `export const ALL_ARM_URIS: ItemUriEntry[] = [\n${ allArmItems.map(item => `  [${ formatItemUriEntry(item).join(', ') }]`).join(',\n') }\n];`;
 
 fs.writeFileSync(outputFilePath, outputContent + '\n' + outputHatContent + '\n' + outputArmContent);
 
